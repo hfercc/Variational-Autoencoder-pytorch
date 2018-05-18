@@ -1,0 +1,1 @@
+python3 main.py --config configs/cifar10_mse_loss.json
