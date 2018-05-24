@@ -1,0 +1,32 @@
+{
+  "experiment_dir": "VAE_XRAB3_mse_loss_experiment000",
+
+  "num_epochs": 800,
+  "seed": 1,
+
+  "dataset": "CIFAR10",
+  "loss": "mse",
+  "input_shape":{
+    "width": 512,
+    "hight": 512,
+    "channels": 1
+  },
+  "num_classes": 2,
+  "dataloader_workers": 4,
+  "shuffle": true,
+
+  "batch_size": 64,
+  "weight_decay": 5e-4,
+  "learning_rate": 1e-3,
+  "learning_rate_decay": 0.99,
+
+  "resume": true,
+  "resume_from": "XRAB3_exp001_checkpoint.pth.tar",
+  "test_every": 20,
+  "to_train": true,
+  "to_test": true,
+
+  "cuda": true,
+  "pin_memory": true,
+  "async_loading": true
+}

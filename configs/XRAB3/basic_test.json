@@ -1,0 +1,33 @@
+{
+  "description": "Basic test for the XRAB3 dataset", 
+  "experiment_dir": "basic_test",
+
+  "num_epochs": 20,
+  "seed": 1,
+
+  "dataset": "XRAB3",
+  "loss": "mse",
+  "input_shape":{
+    "width": 32,
+    "hight": 32,
+    "channels": 3
+  },
+  "num_classes": 10,
+  "dataloader_workers": 4,
+  "shuffle": true,
+
+  "batch_size": 40,
+  "weight_decay": 5e-4,
+  "learning_rate": 1e-3,
+  "learning_rate_decay": 0.99,
+
+  "resume": true,
+  "resume_from": "checkpoint.pth.tar",
+  "test_every": 20,
+  "to_train": true,
+  "to_test": true,
+
+  "cuda": true,
+  "pin_memory": true,
+  "async_loading": true
+}

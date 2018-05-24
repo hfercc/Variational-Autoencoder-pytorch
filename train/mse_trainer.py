@@ -134,3 +134,8 @@ class Trainer:
                   .format(self.args.checkpoint_dir, checkpoint['epoch']))
         except:
             print("No checkpoint exists from '{}'. Skipping...\n".format(self.args.checkpoint_dir))
+
+    # TODO: implement
+    def visualize(self):
+        pass
+        

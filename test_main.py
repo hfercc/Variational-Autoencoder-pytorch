@@ -4,17 +4,15 @@ import torch.backends.cudnn as cudnn
 import torch.nn.init as init
 import torch.utils.data
 
-from data_loaders.cifar10_data_loader import CIFAR10DataLoader
-from graph.ce_loss import Loss as Loss_ce
+from data_loaders.XRAB3_data_loader import XRAB3_DataLoader
 from graph.mse_loss import Loss as Loss_mse
-from graph.ce_model import VAE as VAE_ce
-from graph.mse_model import VAE as VAE_mse
 from graph.flexarch_mse_model import VAE as VAE_flex_mse
-from train.ce_trainer import Trainer as Trainer_ce
 from train.mse_trainer import Trainer as Trainer_mse
 from utils.utils import *
 from utils.weight_initializer import Initializer
 
+# New functionality I implemented
+from modules import MultiLayerConv
 
 def main():
     # Parse the JSON arguments
@@ -27,10 +25,19 @@ def main():
     if args.loss == 'ce':
         model = VAE_ce()
     else:
-        model = VAE_flex_mse()
+        ##############################################
+        # This is the start of the code that I wrote #
+        # to modify the original project             #
+        ##############################################
+        input_size = (1,512,512)
+        encoder, decoder, encoded_dims = MultiLayerConv(1, 96, 32, input_size = input_size, num_layers=7)
+        model = VAE_flex_mse(encoder, decoder, encoded_dims)
+        ##############################################
+        # End of my code                             #
+        ##############################################
 
     # to apply xavier_uniform:
-    Initializer.initialize(model=model, initialization=init.xavier_uniform, gain=init.calculate_gain('relu'))
+    Initializer.initialize(model=model, initialization=init.xavier_uniform_, gain=init.calculate_gain('relu'))
 
     if args.loss == 'ce':
         loss = Loss_ce()
@@ -45,7 +52,12 @@ def main():
         cudnn.benchmark = True
 
     print("Loading Data...")
-    data = CIFAR10DataLoader(args)
+    if args.dataset == "CIFAR10":
+        data = CIFAR10DataLoader(args)
+    elif args.dataset == "XRAB3":
+        data = XRAB3_DataLoader(args)
+    else:
+        raise Exception("Invalid dataset in configs.dataset")
     print("Data loaded successfully\n")
 
     if args.loss == 'ce':
