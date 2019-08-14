@@ -112,7 +112,7 @@ class Trainer:
         features = np.concatenate(features, 0)
         labels = np.concatenate(labels, 0)
 
-        return features, lables
+        return features, labels
 
 
     def get_optimizer(self):
