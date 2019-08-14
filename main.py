@@ -15,6 +15,7 @@ from train.mse_trainer import Trainer as Trainer_mse
 from utils.utils import *
 from utils.weight_initializer import Initializer
 
+import pickle
 
 def main():
     # Parse the JSON arguments
@@ -66,6 +67,12 @@ def main():
         trainer.test_on_trainings_set()
         print("Testing Finished\n")
 
+    if args.to_val:
+        print("Extracting features on training data...")
+        features, labels = trainer.extract_features()
+
+        pickle.dump(features, open('train_features.pkl', 'wb'))
+        pickle.dump(labels, open('train_labels.pkl', 'wb'))
 
 if __name__ == "__main__":
     main()

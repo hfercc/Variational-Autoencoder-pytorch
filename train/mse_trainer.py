@@ -98,6 +98,23 @@ class Trainer:
         print('====> Test on training set loss: {:.4f}'.format(test_loss))
         self.model.train()
 
+    def extract_features():
+        features = []
+        labels = []
+        with torch.no_grad():
+            for i, (data, _) in enumerate(self.train_loader):
+                if self.args.cuda:
+                    data = data.cuda()
+                data = Variable(data, volatile=True)
+                feature = self.model.feature(data)
+                features.append(feature.cpu().numpy())
+                labels.append(_.cpu().numpy())
+        features = np.concatenate(features, 0)
+        labels = np.concatenate(labels, 0)
+
+        return features, lables
+
+
     def get_optimizer(self):
         return optim.Adam(self.model.parameters(), lr=self.args.learning_rate,
                           weight_decay=self.args.weight_decay)

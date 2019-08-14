@@ -46,6 +46,15 @@ class VAE(nn.Module):
         fc1 = self.relu(self.fc_bn1(self.fc1(conv4)))
         return self.fc21(fc1), self.fc22(fc1)
 
+    def feature(self, x):
+        conv1 = self.relu(self.bn1(self.conv1(x)))
+        conv2 = self.relu(self.bn2(self.conv2(conv1)))
+        conv3 = self.relu(self.bn3(self.conv3(conv2)))
+        conv4 = self.relu(self.bn4(self.conv4(conv3))).view(-1, 8 * 8 * 16)
+        fc1 = self.relu(self.fc_bn1(self.fc1(conv4)))
+
+        return fc1
+        
     def reparameterize(self, mu, logvar):
         if self.training:
             std = logvar.mul(0.5).exp_()
