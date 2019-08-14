@@ -28,7 +28,7 @@ def main():
     if args.loss == 'ce':
         model = VAE_ce()
     else:
-        model = VAE_flex_mse()
+        model = VAE_mse()
 
     # to apply xavier_uniform:
     Initializer.initialize(model=model, initialization=init.xavier_uniform, gain=init.calculate_gain('relu'))
