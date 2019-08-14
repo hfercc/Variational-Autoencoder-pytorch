@@ -98,7 +98,7 @@ class Trainer:
         print('====> Test on training set loss: {:.4f}'.format(test_loss))
         self.model.train()
 
-    def extract_features():
+    def extract_features(self):
         features = []
         labels = []
         with torch.no_grad():
